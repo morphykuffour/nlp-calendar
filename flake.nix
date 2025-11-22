@@ -20,7 +20,7 @@
 
           shellHook = ''
             echo "NLP Calendar environment loaded"
-            echo "Run: python nlp_calendar.py \"your event description\""
+            echo "Run: python bin/nlp_calendar_script \"your event description\""
           '';
         };
 
@@ -32,7 +32,7 @@
             source "$CONFIG_FILE"
             set +a
           fi
-          exec ${pythonEnv}/bin/python ${./nlp_calendar.py} "$@"
+          exec ${pythonEnv}/bin/python ${./bin/nlp_calendar_script} "$@"
         '';
 
         apps.default = {
