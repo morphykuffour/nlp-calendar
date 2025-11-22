@@ -28,10 +28,13 @@ Given a natural language instruction, extract a single event and return JSON wit
 }}
 
 Rules:
-- Assume timezone America/New_York if not specified.
+- Assume timezone America/New_York if not specified. EST = America/New_York.
 - If end time is missing, default to 30 minutes after start.
-- If user mentions "for N weeks" with a weekly pattern, use freq=WEEKLY and count=N occurrences.
-- Use the first natural occurrence that matches the pattern. For example, for "every Friday at 7 PM for 8 weeks starting from the week of Mon Nov 24 2025", start on the first Friday on or after that Monday.
+- IMPORTANT: Words like "every", "recurring", "weekly", "daily" indicate a RECURRING event. You MUST set recurrence, not null.
+- For "every Friday" use freq=WEEKLY and by_day=["FR"].
+- If duration is given (e.g., "for 8 weeks", "until January 19"), calculate count or until accordingly.
+- If a time span like "8 weeks from date X to date Y" is mentioned, use that to determine count (number of occurrences) or until date.
+- Use the first natural occurrence that matches the pattern. For "every Friday starting from the week of Mon Nov 24 2025", start on the first Friday on or after that Monday (Nov 28, 2025).
 - Return JSON only, with no comments or extra text.
 """
 
